@@ -76,6 +76,17 @@ class UserInput(BaseModel):
         else:
             return 'low'
 
+    @computed_field
+    @property
+    def age_group(self) -> str:
+        if self.age < 25:
+            return 'young'
+        elif self.age < 45:
+            return 'adult'
+        elif self.age < 60:
+            return 'middle_aged'
+        else:
+            return 'senior'
     
     @computed_field
     @property
@@ -92,7 +103,8 @@ def perdict_permium(data : UserInput):
 
     input_df = pd.DataFrame([{
         'bmi' : data.bmi,
-        'age_group' : data.lifestyle_risk,
+        'age_group' : data.age_group,
+        'lifestyle_risk' : data.lifestyle_risk,
         'city_tier' : data.city_tier,
         'income_lpa' : data.income_lpa,
         'occupation' : data.occupation
